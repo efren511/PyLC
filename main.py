@@ -9,6 +9,13 @@ menu = """
 4) -(fin)-
 """
 
+#declaramos una funcion para escribir un txt
+def escribir(elemento):
+    #abrimos un archivo de texto
+    with open("diagrama.txt", "a") as f:
+        #escribimos en el archivo
+        f.write(elemento)
+
 #creamos una funcion principal
 def main():
     #cremos un bucle para solicitar componentes
