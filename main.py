@@ -11,10 +11,14 @@ menu = """
 
 #declaramos una funcion para escribir un txt
 def escribir(elemento):
-    #abrimos un archivo de texto
+    #abrimos un archivo para escribir
     with open("diagrama.txt", "a") as f:
         #escribimos en el archivo
         f.write(elemento)
+    #abrimos un archivo para leer
+    with open("diagrama.txt", "r") as f:
+        #mostramos el contenido del archivo
+        print(f.read())
 
 #creamos una funcion principal
 def main():
@@ -38,7 +42,7 @@ def main():
                 escribir("-|/|-")
             #si el componente es 3
             elif componente == "3":
-                escribir("-( )-")
+                escribir("-( )-\n")
 
 #creamos un punto de acceso
 if __name__ == '__main__':
