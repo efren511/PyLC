@@ -32,13 +32,13 @@ def main():
         else:
             #si el componente es 1
             if componente == "1":
-                pass
+                escribir("-| |-")
             #si el componente es 2
             elif componente == "2":
-                pass
+                escribir("-|/|-")
             #si el componente es 3
             elif componente == "3":
-                pass
+                escribir("-( )-")
 
 #creamos un punto de acceso
 if __name__ == '__main__':
