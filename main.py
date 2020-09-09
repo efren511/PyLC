@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from termcolor import colored
+
 #menu principal
 menu = """
 1) -| |-
 2) -|/|-
 3) -( )-
-4) -(fin)-
-"""
+4) -(fin)-"""
 
 #declaramos una funcion para escribir un txt
 def escribir(elemento):
@@ -25,7 +26,7 @@ def main():
     #cremos un bucle para solicitar componentes
     while True:
         #mostramos el menu
-        print(menu)
+        print(colored(menu, "green"))
         #solicitamos el componente a usar
         componente = input("Seleccione un componente: ")
         #si el usuario usa la opcion 4
