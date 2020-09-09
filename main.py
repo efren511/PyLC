@@ -21,6 +21,17 @@ def main():
         if componente == "4":
             #salimos
             exit("Bye bye")
+        #y si no...
+        else:
+            #si el componente es 1
+            if componente == "1":
+                pass
+            #si el componente es 2
+            elif componente == "2":
+                pass
+            #si el componente es 3
+            elif componente == "3":
+                pass
 
 #creamos un punto de acceso
 if __name__ == '__main__':
