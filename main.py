@@ -3,6 +3,8 @@
 
 #importamos el modulo para trabajar con colores
 from termcolor import colored
+#importamos modulo para trabajar con comandos del sistema
+import subprocess
 
 #menu principal
 menu1 = """1) Crear Ladder
@@ -12,9 +14,14 @@ menu1 = """1) Crear Ladder
 
 #menu secundario
 menu2 = """
-1) -| |-
-2) -|/|-
+1) -| |-\n
+2) -|/|-\n
 3) -( )-\n"""
+
+#declaramos funcion para limpiar pantalla
+def limpiar():
+    #ejecutamos el comando clear
+    subprocess.run("clear")
 
 #declaramos una funcion para escribir un txt
 def escribir(elemento):
@@ -22,6 +29,8 @@ def escribir(elemento):
     with open("diagrama.txt", "a") as f:
         #escribimos en el archivo
         f.write(elemento)
+    #limpamos la pantalla
+    limpiar()
     #abrimos un archivo para leer
     with open("diagrama.txt", "r") as f:
         #mostramos el contenido del archivo
@@ -31,14 +40,24 @@ def escribir(elemento):
 def main():
     #creamos un bucle para solicitar la opcion para trabajar
     while True:
+        #limpamos la pantalla
+        limpiar()
         #mostramos el menu principal
         print(colored(menu1, "green"))
         #solicitamos el modo de trabajo
         modo = input("Ingresa el modo de trabajo: ")
         #si el modo es 1
         if modo == "1":
+            #limpamos la pantalla
+            limpiar()
             #llamamos a la funcion...
             crear()
+        #si el modo es 4
+        if modo == "4":
+            #limpamos la pantalla
+            limpiar()
+            #salimos
+            exit("Bye bye :3")
         #y si no...
         else:
             #mostramos un mensaje de error
@@ -56,9 +75,15 @@ def crear():
             #solicitamos los pines a usar
             pin = input(colored("Ingresa:\nPin a usar\n'Enter' para la siguiente linea\n'exit' para terminar\n#: ", "blue"))
             #si el usuario no escribio nada
-            if pin == "" or pin == "exit":
+            if pin == "":
                 #escribimos un salto de linea
                 escribir("\n")
+                #salimos del bucle
+                break
+            #si el usuario termino
+            elif pin == "exit":
+                #el modo edicion acabo
+                edicion = False
                 #salimos del bucle
                 break
             else:
@@ -73,9 +98,9 @@ def crear():
             #solicitamos el componente a usar
             componente = input("Seleccione un componente: ")
             #si el usuario usa la opcion 4
-            if componente == "4":
-                #salimos
-                exit("Bye bye")
+            if componente == "exit":
+                #salimos del modo edicion
+                edicion = False
                 #y si no...
             else:
                 #si el componente es 1
