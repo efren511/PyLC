@@ -174,28 +174,62 @@ def crear():
             print(colored(menu2, "green"))
             #solicitamos el componente a usar
             componente = input("Seleccione un componente: ")
-            #si el usuario usa la opcion 4
-            if componente == "exit":
-                #salimos del modo edicion
-                edicion = False
-                #y si no...
-            else:
-                #si el componente es 1
-                if componente == "1":
-                    #escribimos en el diagrama el elemento
-                    diagrama = diagrama + "--| |--"
-                #si el componente es 2
-                elif componente == "2":
-                    #escribimos en el diagrama el elemento
-                    diagrama = diagrama + "--|/|--"
-                #si el componente es 3
-                elif componente == "3":
-                    #escribimos en el diagrama el elemento
-                    diagrama = diagrama + "--( )--"
-                #y si no
+            #creamos una variable para inicio de linea
+            linea_inicio = True
+            #si la linea esta iniciando...
+            if linea_inicio == True:
+                #si el usuario usa la opcion 4
+                if componente == "exit":
+                    #salimos del modo edicion
+                    edicion = False
+                    #y si no...
                 else:
-                    #mostramos un error
-                    print(colored("Componente Desconocido!!", "red"))
+                    #si el componente es 1
+                    if componente == "1":
+                        #escribimos en el diagrama el elemento
+                        diagrama = diagrama + "--| |--"
+                        #quitamos el inicio de linea
+                        linea_inicio = False
+                    #si el componente es 2
+                    elif componente == "2":
+                        #escribimos en el diagrama el elemento
+                        diagrama = diagrama + "--|/|--"
+                        #quitamos el inicio de linea
+                        linea_inicio = False
+                    #si el componente es 3
+                    elif componente == "3":
+                        #escribimos en el diagrama el elemento
+                        diagrama = diagrama + "--( )--"
+                    #y si no
+                    else:
+                        #mostramos un error
+                        print(colored("Componente Desconocido!!", "red"))
+            #y si no..
+            else:
+                #si el usuario usa la opcion 4
+                if componente == "exit":
+                    #salimos del modo edicion
+                    edicion = False
+                    #y si no...
+                else:
+                    #si el componente es 1
+                    if componente == "1":
+                        #escribimos en el diagrama el elemento
+                        diagrama = diagrama + "--| |--"
+                    #si el componente es 2
+                    elif componente == "2":
+                        #escribimos en el diagrama el elemento
+                        diagrama = diagrama + "--|/|--"
+                    #si el componente es 3
+                    elif componente == "3":
+                        #escribimos en el diagrama el elemento
+                        diagrama = diagrama + "--( )--"
+                        #agregamos el inicio de linea
+                        linea_inicio = True
+                    #y si no
+                    else:
+                        #mostramos un error
+                        print(colored("Componente Desconocido!!", "red"))
 #creamos un punto de acceso
 if __name__ == '__main__':
     #llamamos a la funcion principal
