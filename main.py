@@ -16,6 +16,8 @@ import time\n"""
 inicio = """def main():
     GPIO.setmode(GPIO.BOARD)\n"""
 
+bucle = """    while True:\n"""
+
 #creamos una variable para finalizar el codigo
 final = """if __name__ == '__main__':
     try:
@@ -90,17 +92,21 @@ def crear():
     escribir(inicio)
     #ponemos un divisor para las entradas
     diagrama = diagrama + "----------ENTRADAS-----------\n"
+    #creamos una variable para los pines de entrada
+    entradas = []
     #creamos un bucle para ajustar los pines de entrada
     while True:
         #solicitamos los pines de salida
         pin = input(colored("Seleccione los pines de ENTRADA(Enter para continuar): ", "blue"))
         #si hay datos
         if pin != "":
+            #agregamos a los pines de entrada
+            entradas.append(pin)
             #escribimos en el diagrama
             diagrama = diagrama + "Entrada en el pin ({})\n".format(pin)
             #escribimos en el codigo
             escribir("    GPIO.setup({}, GPIO.IN)\n".format(pin))
-            #y si no
+        #y si no
         else:
             #salimos del bucle
             break
@@ -122,8 +128,8 @@ def crear():
             escribir("    GPIO.setup({}, GPIO.OUT)\n".format(pin))
         #y si no
         else:
-                #salimos del bucle
-                break
+            #salimos del bucle
+            break
     #ponemos un divisor para las entradas
     diagrama = diagrama + "-----------------------------\n"
     #creamos una variable para saber si se esta editando el diagrama
@@ -132,6 +138,12 @@ def crear():
     while edicion:
         #creamos una lista para almacenar los pines
         pines = []
+        #añadimos el bucle al codigo
+        escribir(bucle)
+        #añadimos las lecturas de las entradas al codigo
+        for pin in entradas:
+            #escribimos el pin a leer
+            escribir("        contacto{} = GPIO.input({})\n".format(pin, pin))
         #creamos un bucle para solicitar el numero de los pines
         while True:
             #solicitamos los pines a usar
@@ -152,6 +164,8 @@ def crear():
             else:
                 #escribimos en el diagrama el pin
                 diagrama = diagrama + "   {}   ".format(pin)
+                #mostramos el diagrama
+                print(diagrama)
                 #agregamos el pin a la lista
                 pines.append(pin)
         #cremos un bucle para solicitar componentes
