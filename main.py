@@ -6,6 +6,24 @@ from termcolor import colored
 #importamos modulo para trabajar con comandos del sistema
 import subprocess
 
+#creamos una variable para los ajustes
+ajustes = """#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import RPi.GPIO as GPIO
+import time\n"""
+
+#creamos una variable para el inicio del codigo
+inicio = """def main():
+    GPIO.setmode(GPIO.BOARD)\n"""
+
+#creamos una variable para finalizar el codigo
+final = """if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+         GPIO.cleanup()
+         exit("Bye bye")"""
+
 #menu principal
 menu1 = """1) Crear Ladder
 2) Subir Ladder
@@ -26,21 +44,19 @@ def limpiar():
 #declaramos una funcion para escribir un txt
 def escribir(elemento):
     #abrimos un archivo para escribir
-    with open("diagrama.txt", "a") as f:
+    with open("diagrama.py", "a") as f:
         #escribimos en el archivo
         f.write(elemento)
-    #limpamos la pantalla
+    #limpiamos la pantalla
     limpiar()
-    #abrimos un archivo para leer
-    with open("diagrama.txt", "r") as f:
-        #mostramos el contenido del archivo
-        print(colored(f.read(), "yellow"))
+    #mostramos el contenido del archivo
+    print(colored(diagrama, "yellow"))
 
 #creamos una funcion principal
 def main():
     #creamos un bucle para solicitar la opcion para trabajar
     while True:
-        #limpamos la pantalla
+        #limpiamos la pantalla
         limpiar()
         #mostramos el menu principal
         print(colored(menu1, "green"))
@@ -48,13 +64,13 @@ def main():
         modo = input("Ingresa el modo de trabajo: ")
         #si el modo es 1
         if modo == "1":
-            #limpamos la pantalla
+            #limpiamos la pantalla
             limpiar()
             #llamamos a la funcion...
             crear()
         #si el modo es 4
         if modo == "4":
-            #limpamos la pantalla
+            #limpiamos la pantalla
             limpiar()
             #salimos
             exit("Bye bye :3")
@@ -64,6 +80,52 @@ def main():
             print(colored("Modo Desconocido!", "red"))
 #creamos una funcion para realizar el ladder
 def crear():
+    #creamos una variable global para el diagrama
+    global diagrama
+    #la inicializamos como un string vacio
+    diagrama = """"""
+    #escribimos los ajustes iniciales
+    escribir(ajustes)
+    #escribimos el inicio del codigo
+    escribir(inicio)
+    #ponemos un divisor para las entradas
+    diagrama = diagrama + "----------ENTRADAS-----------\n"
+    #creamos un bucle para ajustar los pines de entrada
+    while True:
+        #solicitamos los pines de salida
+        pin = input(colored("Seleccione los pines de ENTRADA(Enter para continuar): ", "blue"))
+        #si hay datos
+        if pin != "":
+            #escribimos en el diagrama
+            diagrama = diagrama + "Entrada en el pin ({})\n".format(pin)
+            #escribimos en el codigo
+            escribir("    GPIO.setup({}, GPIO.IN)\n".format(pin))
+            #y si no
+        else:
+            #salimos del bucle
+            break
+    #ponemos un divisor para las entradas
+    diagrama = diagrama + "-----------------------------\n"
+    #limpiamos la pantalla
+    limpiar()
+    #ponemos un divisor para las entradas
+    diagrama = diagrama + "\n----------SALIDAS----------\n"
+    #creamos un bucle para ajustar los pines de salida
+    while True:
+        #solicitamos los pines de salida
+        pin = input(colored("Seleccione los pines de SALIDA(Enter para continuar): ","blue"))
+        #si hay datos
+        if pin != "":
+            #escribimos en el diagrama
+            diagrama = diagrama + "Salida en el pin ({})\n".format(pin)
+            #escribimos en el codigo
+            escribir("    GPIO.setup({}, GPIO.OUT)\n".format(pin))
+        #y si no
+        else:
+                #salimos del bucle
+                break
+    #ponemos un divisor para las entradas
+    diagrama = diagrama + "-----------------------------\n"
     #creamos una variable para saber si se esta editando el diagrama
     edicion = True
     #creamos un bucle para que este solicitando los elementos correspondientes
@@ -86,12 +148,13 @@ def crear():
                 edicion = False
                 #salimos del bucle
                 break
+            #y si no
             else:
                 #escribimos en el diagrama el pin
-                escribir("   {}   ".format(pin))
+                diagrama = diagrama + "   {}   ".format(pin)
                 #agregamos el pin a la lista
                 pines.append(pin)
-                #cremos un bucle para solicitar componentes
+        #cremos un bucle para solicitar componentes
         for pin in pines:
             #mostramos el menu
             print(colored(menu2, "green"))
@@ -105,17 +168,17 @@ def crear():
             else:
                 #si el componente es 1
                 if componente == "1":
-                    #escribimos...
-                    escribir("--| |--")
-                    #si el componente es 2
+                    #escribimos en el diagrama el elemento
+                    diagrama = diagrama + "--| |--"
+                #si el componente es 2
                 elif componente == "2":
-                    #escribimos...
-                    escribir("--|/|--")
-                    #si el componente es 3
+                    #escribimos en el diagrama el elemento
+                    diagrama = diagrama + "--|/|--"
+                #si el componente es 3
                 elif componente == "3":
-                    #escribimos...
-                    escribir("--( )--\n")
-                    #y si no
+                    #escribimos en el diagrama el elemento
+                    diagrama = diagrama + "--( )--"
+                #y si no
                 else:
                     #mostramos un error
                     print(colored("Componente Desconocido!!", "red"))
