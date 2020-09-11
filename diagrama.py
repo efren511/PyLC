@@ -1,28 +1,31 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import RPi.GPIO as GPIO
+from termcolor import colored
 import time
-
 def main():
     GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(1, GPIO.IN)
-    GPIO.setup(2, GPIO.IN)
-    GPIO.setup(3, GPIO.OUT)
-    GPIO.setup(4, GPIO.OUT)
+    GPIO.setup(40, GPIO.IN)
+    GPIO.setup(37, GPIO.OUT)
     while True:
-        contacto1 = GPIO.input(1)
-        contacto2 = GPIO.input(2)
-        if contacto1 and not contacto2:
-            GPIO.output(3, GPIO.LOW)
+        contacto40 = GPIO.input(40)
+        if contacto40:
+            GPIO.output(37, GPIO.HIGH)
         else:
-            GPIO.output(3, GPIO.HIGH)
-        if not contacto1 and not contacto2:
-            GPIO.output(4, GPIO.LOW)
-        else:
-            GPIO.output(4, GPIO.HIGH)
+            GPIO.output(37, GPIO.LOW)
 if __name__ == '__main__':
     try:
+        print(colored('''----------ENTRADAS-----------
+Entrada en el pin (40)
+-----------------------------
+
+----------SALIDAS----------
+Salida en el pin (37)
+-----------------------------
+   40      37   
+--| |----( )--
+''', "yellow"))
         main()
     except KeyboardInterrupt:
-         GPIO.cleanup()
-         exit("Bye bye")
+        GPIO.cleanup()
+        exit("Bye bye")

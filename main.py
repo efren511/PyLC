@@ -10,6 +10,7 @@ import subprocess
 ajustes = """#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import RPi.GPIO as GPIO
+from termcolor import colored
 import time\n"""
 
 #creamos una variable para el inicio del codigo
@@ -17,14 +18,6 @@ inicio = """def main():
     GPIO.setmode(GPIO.BOARD)\n"""
 
 bucle = """    while True:\n"""
-
-#creamos una variable para finalizar el codigo
-final = """if __name__ == '__main__':
-    try:
-        main()
-    except KeyboardInterrupt:
-         GPIO.cleanup()
-         exit("Bye bye")"""
 
 #menu principal
 menu1 = """1) Crear Ladder
@@ -162,6 +155,14 @@ def crear():
                 break
             #si el usuario termino
             elif pin == "exit":
+                #creamos una variable para finalizar el codigo
+                final = """if __name__ == '__main__':
+    try:
+        print(colored('''{}''', "yellow"))
+        main()
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+        exit("Bye bye")\n""".format(diagrama)
                 #escribimos el final del codigo
                 escribir(final)
                 #el modo edicion acabo
@@ -244,9 +245,9 @@ def crear():
                         diagrama = diagrama + "--( )--\n"
                         #escribimos en el diagrama
                         escribir(""":
-            GPIO.output({}, GPIO.LOW)
+            GPIO.output({}, GPIO.HIGH)
         else:
-            GPIO.output({}, GPIO.HIGH)\n""".format(pin, pin))
+            GPIO.output({}, GPIO.LOW)\n""".format(pin, pin))
                         #agregamos el inicio de linea
                         linea_inicio = True
                     #y si no
