@@ -21,8 +21,8 @@ bucle = """    while True:\n"""
 
 #menu principal
 menu1 = """1) Crear Ladder
-2) Subir Ladder
-3) Ayuda
+2) Subir Ladder(Proximamente)
+3) Ayuda(Proximamente)
 4) Salir\n"""
 
 #menu secundario
@@ -30,6 +30,12 @@ menu2 = """
 1) -| |-\n
 2) -|/|-\n
 3) -( )-\n"""
+
+#funcion para crear un archivo nuevo
+def nuevo():
+    #abrimos el archivo
+    with open("diagrama.py", "w") as f:
+        pass
 
 #creamos una funcion para mostrar el diagrama
 def mostrar():
@@ -79,6 +85,8 @@ def main():
             print(colored("Modo Desconocido!", "red"))
 #creamos una funcion para realizar el ladder
 def crear():
+    #hacemos un nuevo archivo
+    nuevo()
     #creamos una variable global para el diagrama
     global diagrama
     #la inicializamos como un string vacio
