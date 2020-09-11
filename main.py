@@ -38,6 +38,13 @@ menu2 = """
 2) -|/|-\n
 3) -( )-\n"""
 
+#creamos una funcion para mostrar el diagrama
+def mostrar():
+    #limpiamos la pantalla
+    limpiar()
+    #mostramos el contenido del archivo
+    print(colored(diagrama, "yellow"))
+
 #declaramos funcion para limpiar pantalla
 def limpiar():
     #ejecutamos el comando clear
@@ -49,11 +56,8 @@ def escribir(elemento):
     with open("diagrama.py", "a") as f:
         #escribimos en el archivo
         f.write(elemento)
-    #limpiamos la pantalla
-    limpiar()
-    #mostramos el contenido del archivo
-    print(colored(diagrama, "yellow"))
-
+    #mostramos el diagrama
+    mostrar()
 #creamos una funcion principal
 def main():
     #creamos un bucle para solicitar la opcion para trabajar
@@ -134,28 +138,32 @@ def crear():
     diagrama = diagrama + "-----------------------------\n"
     #creamos una variable para saber si se esta editando el diagrama
     edicion = True
+    #añadimos el bucle al codigo
+    escribir(bucle)
+    #añadimos las lecturas de las entradas al codigo
+    for pin in entradas:
+        #escribimos el pin a leer
+        escribir("        contacto{} = GPIO.input({})\n".format(pin, pin))
     #creamos un bucle para que este solicitando los elementos correspondientes
     while edicion:
         #creamos una lista para almacenar los pines
         pines = []
-        #añadimos el bucle al codigo
-        escribir(bucle)
-        #añadimos las lecturas de las entradas al codigo
-        for pin in entradas:
-            #escribimos el pin a leer
-            escribir("        contacto{} = GPIO.input({})\n".format(pin, pin))
         #creamos un bucle para solicitar el numero de los pines
         while True:
+            #mostramos el diagrama
+            mostrar()
             #solicitamos los pines a usar
             pin = input(colored("Ingresa:\nPin a usar\n'Enter' para la siguiente linea\n'exit' para terminar\n#: ", "blue"))
             #si el usuario no escribio nada
             if pin == "":
-                #escribimos un salto de linea
-                escribir("\n")
+                #ponemos un salto de linea
+                diagrama = diagrama + "\n"
                 #salimos del bucle
                 break
             #si el usuario termino
             elif pin == "exit":
+                #escribimos el final del codigo
+                escribir(final)
                 #el modo edicion acabo
                 edicion = False
                 #salimos del bucle
@@ -168,38 +176,44 @@ def crear():
                 print(diagrama)
                 #agregamos el pin a la lista
                 pines.append(pin)
+        #creamos una variable para inicio de linea
+        linea_inicio = True
         #cremos un bucle para solicitar componentes
         for pin in pines:
             #mostramos el menu
             print(colored(menu2, "green"))
             #solicitamos el componente a usar
             componente = input("Seleccione un componente: ")
-            #creamos una variable para inicio de linea
-            linea_inicio = True
             #si la linea esta iniciando...
             if linea_inicio == True:
                 #si el usuario usa la opcion 4
                 if componente == "exit":
                     #salimos del modo edicion
                     edicion = False
-                    #y si no...
+                #y si no...
                 else:
                     #si el componente es 1
                     if componente == "1":
                         #escribimos en el diagrama el elemento
                         diagrama = diagrama + "--| |--"
+                        #escribimos en el diagrama
+                        escribir("        if contacto{}".format(pin))
                         #quitamos el inicio de linea
                         linea_inicio = False
                     #si el componente es 2
                     elif componente == "2":
                         #escribimos en el diagrama el elemento
                         diagrama = diagrama + "--|/|--"
+                        #escribimos en el diagrama
+                        escribir("        if not contacto{}".format(pin))
                         #quitamos el inicio de linea
                         linea_inicio = False
                     #si el componente es 3
                     elif componente == "3":
                         #escribimos en el diagrama el elemento
                         diagrama = diagrama + "--( )--"
+                        #escribimos en el diagrama
+                        escribir("""        GPIO.output({}, GPIO.HIGH)\n""".format(pin, pin))
                     #y si no
                     else:
                         #mostramos un error
@@ -216,14 +230,23 @@ def crear():
                     if componente == "1":
                         #escribimos en el diagrama el elemento
                         diagrama = diagrama + "--| |--"
+                        #escribimos en el diagrama
+                        escribir(" and contacto{}".format(pin))
                     #si el componente es 2
                     elif componente == "2":
                         #escribimos en el diagrama el elemento
                         diagrama = diagrama + "--|/|--"
+                        #escribimos en el diagrama
+                        escribir(" and not contacto{}".format(pin))
                     #si el componente es 3
                     elif componente == "3":
                         #escribimos en el diagrama el elemento
-                        diagrama = diagrama + "--( )--"
+                        diagrama = diagrama + "--( )--\n"
+                        #escribimos en el diagrama
+                        escribir(""":
+            GPIO.output({}, GPIO.LOW)
+        else:
+            GPIO.output({}, GPIO.HIGH)\n""".format(pin, pin))
                         #agregamos el inicio de linea
                         linea_inicio = True
                     #y si no
