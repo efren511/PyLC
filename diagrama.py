@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import RPi.GPIO as GPIO
 import time
+
 def main():
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(1, GPIO.IN)
