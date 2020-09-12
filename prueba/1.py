@@ -1,3 +1,3 @@
-import os
+from 2 import saludo
 
-os.sys("./2.py")
+2.saludo()

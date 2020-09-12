@@ -89,7 +89,7 @@ def main():
         #limpiamos la pantalla
         limpiar()
         #mostramos el banner
-        print(colored(banner, "green"))
+        print(banner, "green")
         #mostramos el menu principal
         print(colored(menu1, "green"))
         #solicitamos el modo de trabajo

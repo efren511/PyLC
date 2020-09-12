@@ -1,0 +1,3 @@
+from funcione import *
+
+saludo()
