@@ -35,6 +35,7 @@ menu2 = """
 def nuevo():
     #abrimos el archivo
     with open("diagrama.py", "w") as f:
+        #pasamos a la siguiente instruccion
         pass
 
 #creamos una funcion para mostrar el diagrama
